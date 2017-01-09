@@ -1,0 +1,17 @@
+Requirements
+
+Create a Spring app with the following libraries added:
+Web
+DevTools
+JPA
+H2
+PostGreSQL
+You can use either H2 or PostGreSQL for this project.
+Extract the aforementioned zip file, rename the directory to public, and put it in your project.
+Create GET and POST routes for /lecturers and /reviews
+The /lecturers POST route must take the following query parameters: name, topic, and image
+The /reviews POST route must take the following query parameters: author, text, lecturerId, and isGood
+The /lecturers GET route must return a JSON array of objects that have an id, name, topic, and image
+The /reviews GET route must return a JSON array of objects that have an id, author, text, lecturerId, and isGood
+Optional: Improve the UI so it properly updates after creating a lecturer and a review.
+Optional: Change the front and back end code to send JSON to the POST routes instead of query parameters.
