@@ -22,9 +22,6 @@ public class Review {
     String text;
 
     @Column
-    int lecturerId;
-
-    @Column
     Boolean isGood;
 
     @ManyToOne
@@ -33,11 +30,11 @@ public class Review {
     public Review() {
     }
 
-    public Review(String author, String text, int lecturerId, Boolean isGood) {
+    public Review(String author, String text, Boolean isGood, Lecturer lecturer) {
         this.author = author;
         this.text = text;
-        this.lecturerId = lecturerId;
         this.isGood = isGood;
+        this.lecturer = lecturer;
     }
 
     public int getId() {
@@ -62,14 +59,6 @@ public class Review {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public int getLecturerId() {
-        return lecturerId;
-    }
-
-    public void setLecturerId(int lecturerId) {
-        this.lecturerId = lecturerId;
     }
 
     public Boolean getGood() {
