@@ -8,10 +8,7 @@ import com.theironyard.services.ReviewRepository;
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -49,25 +46,46 @@ public class HannibalLecturerController {
         uidb.stop();
     }
 
+//    managing and displaying lecturer data
+
+//    returning a json of lecturers to the page
     @RequestMapping(path = "/lecturers", method = RequestMethod.GET)
-    public Iterable<Lecturer> getLecturers () {
-    return lecturers.findAll();
-    }
+    public Iterable<Lecturer> getLecturers () {return lecturers.findAll();}
 
-    @RequestMapping(path = "/reviews", method = RequestMethod.GET)
-    public Iterable<Review> getReviews ()  {
-    return reviews.findAll();
-    }
-
-    @RequestMapping(path = "/create-lecturer", method = RequestMethod.POST)
-    public void basket (String name, String topic, String image, HttpServletResponse response) {
+//    saving a new lecturer to the database
+    @RequestMapping(path = "/lecturers", method = RequestMethod.POST)
+    public void createLecturer (String name, String topic, String image, HttpServletResponse response) {
+        System.out.println(name);
+        System.out.println(topic);
+        System.out.println(image);
+        System.out.println(response);
         Lecturer lecturer = new Lecturer(name, topic, image);
+        System.out.println(lecturer);
         lecturers.save(lecturer);
     }
 
-    @RequestMapping(path = "/create-review", method = RequestMethod.POST)
-    public void lotion (String author, String text, Boolean isGood, Lecturer lecturer, HttpServletResponse response) {
+
+//    managing and displaying review data
+
+//    returning a json of reviews to the page
+    @RequestMapping(path = "/reviews", method = RequestMethod.GET)
+    public Iterable<Review> getReviews (int lecturerId)  {
+        Lecturer lecturer = lecturers.findOne(lecturerId);
+        return reviews.findByLecturer(lecturer);
+    }
+
+//    saving a new review to the database
+    @RequestMapping(path = "/reviews", method = RequestMethod.POST)
+    public void createReview (String author, String text, Boolean isGood, int lecturerId, HttpServletResponse response) {
+        System.out.println(author);
+        System.out.println(text);
+        System.out.println(isGood);
+        System.out.println(lecturerId);
+        System.out.println(response);
+        Lecturer lecturer = lecturers.findOne(lecturerId);
+        System.out.println(lecturer);
         Review review = new Review(author, text, isGood, lecturer);
+        System.out.println(review);
         reviews.save(review);
     }
 
